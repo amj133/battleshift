@@ -35,6 +35,8 @@ class TurnProcessor
     game.player_2_turns += 1
   end
 
+  # Delete methods below? - not called elsewhere
+
   def player
     Player.new(game.player_1_board)
   end
