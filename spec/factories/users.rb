@@ -4,6 +4,7 @@ FactoryBot.define do
     email "jane@gmail.com"
     password "test1"
     password_confirmation "test1"
-    api_key "P5ThQc/y5nr34mDZWrU+FQ=="
+    api_key ENV['USER_API_KEY']
+    status "active"
   end
 end
