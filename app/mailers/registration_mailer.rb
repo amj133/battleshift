@@ -1,5 +1,5 @@
 class RegistrationMailer < ApplicationMailer
-  default from: 'admin@battleshift.com'
+  default from: 'app92045074@heroku.com'
 
   def activate(user)
     @user = user
