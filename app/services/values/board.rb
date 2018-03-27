@@ -2,7 +2,7 @@ class Board
   attr_reader :length,
               :board
 
-  def initialize(length)
+  def initialize(length = 4)
     @length = length
     @board = create_grid
   end
@@ -203,4 +203,3 @@ class Board
     get_column(coordinate) == "1"
   end
 end
-
