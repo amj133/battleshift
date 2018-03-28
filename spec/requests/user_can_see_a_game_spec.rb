@@ -3,6 +3,7 @@ require 'rails_helper'
 describe 'GET /api/v1/games/1' do
   context 'with an existing game' do
     it 'returns a game with boards' do
+      user = create(:user)
       player_1_board = Board.new(4)
       player_2_board = Board.new(4)
       sm_ship = Ship.new(2)
@@ -43,7 +44,7 @@ describe 'GET /api/v1/games/1' do
       game = Game.new(game_attributes)
       game.save!
 
-      get "/api/v1/games/#{game.id}"
+      get "/api/v1/games/#{game.id}", :headers => {"X-API-KEY" => user.api_key}
 
       actual  = JSON.parse(response.body, symbolize_names: true)
       expected = Game.last
@@ -62,7 +63,9 @@ describe 'GET /api/v1/games/1' do
 
   describe 'with no game' do
     it 'returns a 400' do
-      get "/api/v1/games/1"
+      user = create(:user)
+
+      get "/api/v1/games/1", :headers => {"X-API-KEY" => user.api_key}
 
       expect(response.status).to be(400)
     end

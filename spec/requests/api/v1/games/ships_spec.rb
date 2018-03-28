@@ -12,13 +12,14 @@ describe "Api::V1::Ships" do
       )
     }
     it "updates the contents of the spaces on the board" do
+      user = create(:user)
       ship_1_payload = {
                           ship_size: 3,
                           start_space: "A1",
                           end_space: "A3"
                         }
 
-      post "/api/v1/games/#{game.id}/ships", params: ship_1_payload
+      post "/api/v1/games/#{game.id}/ships", params: ship_1_payload, :headers => {"X-API-KEY" => user.api_key}
 
       game = Game.last
       game_response = JSON.parse(response.body, symbolize_names: true)

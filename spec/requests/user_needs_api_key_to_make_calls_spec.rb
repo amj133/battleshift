@@ -12,9 +12,9 @@ describe "user needs Api key to make calls" do
   end
 
   it "protects against inactive users" do
-    create(:user, status: "inactive")
+    user = create(:user, status: "inactive")
 
-    post "/api/v1/games", :headers => {"X-API-KEY" => ENV['USER_API_KEY']}
+    post "/api/v1/games", :headers => {"X-API-KEY" => user.api_key}
     unauth_response = JSON.parse(response.body, symbolize_names: true)
 
     expect(unauth_response[:message]).to eq("Unauthorized")

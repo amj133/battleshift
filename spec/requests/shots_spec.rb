@@ -13,12 +13,13 @@ describe "Api::V1::Shots" do
     }
 
     it "updates the message and board with a hit" do
+      user = create(:user)
       ShipPlacer.new(board: player_2_board,
                      ship: sm_ship,
                      start_space: "A1",
                      end_space: "A2").run
 
-      headers = { "CONTENT_TYPE" => "application/json" }
+      headers = { "CONTENT_TYPE" => "application/json", "X-API-KEY" => user.api_key}
       json_payload = {target: "A1"}.to_json
 
       post "/api/v1/games/#{game.id}/shots", params: json_payload, headers: headers
@@ -35,7 +36,9 @@ describe "Api::V1::Shots" do
     end
 
     it "updates the message and board with a miss" do
-      headers = { "CONTENT_TYPE" => "application/json" }
+      user = create(:user)
+
+      headers = { "CONTENT_TYPE" => "application/json", "X-API-KEY" => user.api_key}
       json_payload = {target: "A1"}.to_json
 
       post "/api/v1/games/#{game.id}/shots", params: json_payload, headers: headers
@@ -53,11 +56,12 @@ describe "Api::V1::Shots" do
     end
 
     it "updates the message but not the board with invalid coordinates" do
+      user = create(:user)
       player_1_board = Board.new(1)
       player_2_board = Board.new(1)
       game = create(:game, player_1_board: player_1_board, player_2_board: player_2_board)
 
-      headers = { "CONTENT_TYPE" => "application/json" }
+      headers = { "CONTENT_TYPE" => "application/json", "X-API-KEY" => user.api_key}
       json_payload = {target: "B1"}.to_json
       post "/api/v1/games/#{game.id}/shots", params: json_payload, headers: headers
 
