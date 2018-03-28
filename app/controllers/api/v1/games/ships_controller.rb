@@ -2,6 +2,7 @@ class Api::V1::Games::ShipsController < ApiController
   def create
     game = Game.find(params[:game_id])
     ship = Ship.new(params[:ship_size].to_i)
+    # current_board = current_player.board
     board = case request.headers['X-API-KEY']
             when game.player_1 then game.player_1_board
             when game.player_2 then game.player_2_board

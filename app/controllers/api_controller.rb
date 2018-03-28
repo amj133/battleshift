@@ -14,4 +14,11 @@ class ApiController < ActionController::API
     users = User.where(api_key: request.headers["X-API-KEY"])
     users.empty? || users.first.inactive?
   end
+
+  def current_player
+    case request.headers['X-API-KEY']
+    when game.player_1 then Player.new(game.player_1_board)
+    when game.player_2 then Player.new(game.player_2_board)
+    end
+  end
 end
