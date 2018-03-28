@@ -56,6 +56,8 @@ describe "Api::V1::Shots" do
     end
 
     it "updates the message and board with a miss when player 2 shoots" do
+      allow_any_instance_of(Game).to receive(:current_turn).and_return("player_2")
+
       headers = { "CONTENT_TYPE" => "application/json", "X-API-KEY" => player_2.api_key}
       json_payload = {target: "A1"}.to_json
 

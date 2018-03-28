@@ -2,8 +2,7 @@ class ApiController < ActionController::API
   before_action :require_api_key
 
   def require_game
-    game_id = params[:game_id] || params[:id]
-    render status: 400 if Game.where(id: game_id).empty?
+    render status: 400 unless current_game
   end
 
   def require_api_key
@@ -20,5 +19,10 @@ class ApiController < ActionController::API
     when game.player_1 then Player.new(game.player_1_board)
     when game.player_2 then Player.new(game.player_2_board)
     end
+  end
+
+  def current_game
+    game_id = params[:game_id] || params[:id]
+    @game ||= Game.find(game_id) unless Game.where(id: game_id).empty?
   end
 end
