@@ -1,8 +1,9 @@
 class TurnProcessor
-  def initialize(game, target)
+  def initialize(game, target, opponent_board)
     @game   = game
     @target = target
     @messages = []
+    @opponent_board = opponent_board
   end
 
   def run!
@@ -21,10 +22,10 @@ class TurnProcessor
 
   private
 
-  attr_reader :game, :target
+  attr_reader :game, :target, :opponent_board
 
   def attack_opponent
-    result = Shooter.fire!(board: opponent.board, target: target)
+    result = Shooter.fire!(board: opponent_board, target: target)
     @messages << "Your shot resulted in a #{result}."
     game.player_1_turns += 1
   end
