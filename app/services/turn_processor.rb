@@ -1,6 +1,6 @@
 class TurnProcessor
   attr_reader :status
-  
+
   def initialize(game, target, opponent_board, current_player)
     @game   = game
     @target = target
@@ -13,6 +13,7 @@ class TurnProcessor
   def run!
     begin
       attack_opponent
+      @messages << "Game over." if game_over?
       game.save!
     rescue InvalidAttack => e
       @messages << e.message
@@ -22,6 +23,12 @@ class TurnProcessor
 
   def message
     @messages.join(" ")
+  end
+
+  def game_over?
+    opponent_board.board.flatten.all? do |space|
+      space.values.first.contents.nil? || space.values.first.contents.is_sunk?
+    end
   end
 
   private
