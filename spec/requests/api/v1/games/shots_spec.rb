@@ -192,6 +192,7 @@ describe "Api::V1::Shots" do
       actual_game = JSON.parse(response.body, symbolize_names: true)
 
       expect(actual_game[:message]).to eq("Your shot resulted in a Hit. Battleship sunk. Game over.")
+      expect(actual_game[:winner]).to eq(player_1.email)
     end
   end
 end
