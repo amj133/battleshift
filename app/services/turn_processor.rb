@@ -13,18 +13,17 @@ class TurnProcessor
   def run!
     begin
       attack_opponent
-      game_status
-      game.save!
     rescue InvalidAttack => e
       @messages << e.message
       @status = 400
     end
+    game_status
+    game.save!
   end
 
   def message
     @messages.join(" ")
   end
-
 
 
   private
@@ -33,17 +32,18 @@ class TurnProcessor
     def game_status
       if game_over?
         @messages << "Game over."
-        game.winner = User.find_by(api_key: player.api_key).email
+        game.winner ||= User.find_by(api_key: player.api_key).email
       end
     end
 
     def game_over?
-      opponent_board.board.flatten.all? do |space|
+      game.winner || opponent_board.board.flatten.all? do |space|
         space.values.first.contents.nil? || space.values.first.contents.is_sunk?
       end
     end
 
     def attack_opponent
+      raise InvalidAttack.new("Invalid move.") if game_over?
       result = Shooter.fire!(board: opponent_board, target: target)
       @messages << "Your shot resulted in a #{result}."
       switch_turns
