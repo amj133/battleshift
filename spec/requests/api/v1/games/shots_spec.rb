@@ -92,6 +92,8 @@ describe "Api::V1::Shots" do
     end
 
     it "updates the message but not the board with invalid coordinates" do
+      place_small_ship(game.player_2)
+
       headers = { "CONTENT_TYPE" => "application/json", "X-API-KEY" => player_1.api_key}
       json_payload = {target: "B5"}.to_json
       post "/api/v1/games/#{game.id}/shots", params: json_payload, headers: headers
@@ -104,6 +106,8 @@ describe "Api::V1::Shots" do
     end
 
     it "displays error message when player sends request and its not their turn" do
+      place_small_ship(game.player_2)
+
       headers = { "CONTENT_TYPE" => "application/json", "X-API-KEY" => player_1.api_key}
       json_payload = {target: "A1"}.to_json
 
@@ -148,6 +152,8 @@ describe "Api::V1::Shots" do
     it 'displays game over message when a player sinks all of opponents ships' do
       place_small_ship(game.player_2)
       place_md_ship(game.player_2)
+      place_small_ship(game.player_1)
+      place_md_ship(game.player_1)
 
       headers = { "CONTENT_TYPE" => "application/json", "X-API-KEY" => player_1.api_key}
       json_payload = {target: "A1"}.to_json
@@ -192,6 +198,17 @@ describe "Api::V1::Shots" do
       actual_game = JSON.parse(response.body, symbolize_names: true)
 
       expect(actual_game[:message]).to eq("Your shot resulted in a Hit. Battleship sunk. Game over.")
+      expect(actual_game[:winner]).to eq(player_1.email)
+
+      headers = { "CONTENT_TYPE" => "application/json", "X-API-KEY" => player_2.api_key}
+      json_payload = {target: "B1"}.to_json
+      post "/api/v1/games/#{game.id}/shots", params: json_payload, headers: headers
+
+      expect(response.status).to eq(400)
+
+      actual_game = JSON.parse(response.body, symbolize_names: true)
+
+      expect(actual_game[:message]).to eq("Invalid move. Game over.")
       expect(actual_game[:winner]).to eq(player_1.email)
     end
   end
