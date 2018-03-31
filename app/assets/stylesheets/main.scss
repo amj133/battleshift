@@ -38,7 +38,8 @@ html {
 
 .banner {
   width: auto;
-  background-image:  url("commander.png");
+  // background-image: url(<%= asset_path 'commander.png' %>);
+  background-image:  image-url("commander.png");
   background-repeat: no-repeat;
   height: 800px;
 }
