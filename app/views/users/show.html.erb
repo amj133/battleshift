@@ -1,5 +1,9 @@
 Logged in as <%= @user.name %>
 
-This account has not yet been activated.  Please check your email.
+<% if @user.status == "inactive" %>
+  This account has not yet been activated.  Please check your email.
+<% else %>
+  Welcome <%= @user.name %>. Prepare for battle...ship.
+<% end %>
 
 Status: <%= @user.status.capitalize %>
