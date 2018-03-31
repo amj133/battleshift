@@ -8,11 +8,46 @@
     <%= javascript_include_tag 'application' %>
     <link href="https://fonts.googleapis.com/css?family=Allerta+Stencil" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Share+Tech" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cedarville+Cursive" rel="stylesheet">
   </head>
 
   <body>
+    <ul class="nav">
+      <li class="nav-item">
+        <a class="app-name" href="#">APi-BattleShip</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Link</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Link</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Link</a>
+      </li>
+      <li class="nav-item">
+        <%= link_to image_tag("ship.png", alt: "ship", :id => 'nav-image'), '/' %>
+      </li>
+    </ul>
+
     <p class="flash"><%= flash.notice %></p>
 
-    <%= yield %>
+    <main>
+      <section class="section-container">
+        <%= yield %>
+      </section>
+
+      <div class="banner-container">
+        <div class="banner">
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="created-by">
+        <p>Anna Royer & Andrew Jeffery</p>
+      </div>
+    </footer>
+
   </body>
 </html>
