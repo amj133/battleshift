@@ -1,0 +1,6 @@
+<%= form_tag games_path, method: :get do %>
+  <%= label_tag :opponent_email %>
+  <%= email_field_tag :opponent_email %>
+
+  <%= submit_tag 'Start New Game' %>
+<% end %>

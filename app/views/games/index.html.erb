@@ -1,0 +1,12 @@
+<h4 class="page-header"><%= @game.summary %></h4>
+<p class="board-text">current turn: <%= @game.current_turn %></p>
+<% binding.pry %>
+<table class="table">
+  <% @game.rows.each do |row|%>
+    <tr>
+      <% row.each do |data| %>
+        <td class="board-text"><%= data[:coordinates] %></td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
