@@ -74,7 +74,7 @@ Feel free to make pull requests or comments to contribute to this application. W
 
 ## Authors
 
-* [Andrew Jeffrey](https://github.com/amj133)
+* [Andrew Jeffery](https://github.com/amj133)
 * [Anna Royer](https://github.com/annaroyer)
 
 ## Acknowledgments
